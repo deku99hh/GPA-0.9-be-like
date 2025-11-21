@@ -1,0 +1,40 @@
+body{
+    padding-bottom: 2000px;
+}
+
+header{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.whatYouDidBefore {
+    display: flex;
+    flex-direction: column;
+}
+
+.blockes {
+    margin-bottom: 20px;
+}
+
+.slice {
+    display: flex;
+}
+
+.POPup {
+    display: none;
+    position: absolute;
+    right: 0;
+}
+
+#checkboxGrade:checked + .gradePOPup{
+    display: flex;
+}
+
+#checkboxCredit:checked + .creditPOPup{
+    display: flex;
+}
+
+#checkboxIsAgain:checked + .isAgainPOPup{
+    display: flex;
+}
