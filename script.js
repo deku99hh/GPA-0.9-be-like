@@ -54,15 +54,15 @@ let TheArray = [
         semesterGPA : 0,
         slices : [
             {
-                grade: '##',
+                grade: 'F',
                 credit: 0,
                 isAgain: null,
             },{
-                grade: '##',
+                grade: 'F',
                 credit: 0,
                 isAgain: null,
             },{
-                grade: '##',
+                grade: 'F',
                 credit: 0,
                 isAgain: null,
             }
@@ -85,11 +85,14 @@ const grades={
     'F':0,
 }
 
-let finalGPA = document.getElementById('finalGPA');
+let finalGPANum = document.getElementById('finalGPANum');
 let pastHours = document.getElementById('pastHours');
 let pastGPA = document.getElementById('pastGPA');
 let blockes = document.querySelector('.blockes');
 let buttons = document.querySelectorAll('button');
+let totalPoints = 0;
+let totalCredits = 0;
+
 
 addEventListener('DOMContentLoaded',()=>{
     update();
@@ -112,15 +115,15 @@ function addSemesterBlock(){
         semesterGPA : 0,
         slices : [
             {
-                grade: '##',
+                grade: 'F',
                 credit: 0,
                 isAgain: null,
             },{
-                grade: '##',
+                grade: 'F',
                 credit: 0,
                 isAgain: null,
             },{
-                grade: '##',
+                grade: 'F',
                 credit: 0,
                 isAgain: null,
             }
@@ -133,7 +136,7 @@ function addSemesterBlock(){
 function addSlice(blockNum){
     TheArray[blockNum].slices.push(
         {
-            grade: '##',
+            grade: 'F',
             credit: 0,
             isAgain: null,
         }
@@ -143,21 +146,13 @@ function addSlice(blockNum){
 
 function update(){
     let theHTML='';
+    totalPoints = 0;
+    totalCredits = 0;
     for (let [semesterIndex, element] of TheArray.entries()){
         let sliceesHTML='';
         let semesterGPA=0;
-
-
-
-
-
-
-
-
-
-
-
-
+        let semesterCredits=0;
+        let semesterPoints=0;
 
 
 
@@ -166,6 +161,9 @@ function update(){
 
 
         for (let [sliceIndex, slice] of Object.entries(element.slices)){
+
+            semesterPoints+=(calcNum(slice.grade)*slice.credit);
+            semesterCredits+=slice.credit;
             // console.log(sliceIndex);
             sliceesHTML=sliceesHTML+`
             <div class="slice">
@@ -229,9 +227,10 @@ function update(){
             </div>
             `
         ;}
+        
+        semesterGPA=(Math.round((semesterPoints/semesterCredits)*100)/100);
 
-
-
+        element.semesterGPA=semesterGPA;
 
 
 
@@ -250,8 +249,11 @@ function update(){
                 <button id="addSlice" onclick="addSlice(${semesterIndex})">add</button>
             </div>
         `);
+    totalPoints+=semesterPoints;
+    totalCredits+=semesterCredits
     }
     blockes.innerHTML=theHTML;
+    finalGPACalc()
     buttonListener();
 };
 
@@ -313,4 +315,18 @@ function calcNum(grade){
     // };
 
     return(grades[grade]);
+}
+
+function finalGPACalc(){
+    let finalGPAcount=0;
+    // for (let element of TheArray){
+    //     finalGPAcount+=element.semesterGPA;
+    //     // console.log(finalGPAcount);
+    // }
+    if(totalCredits === 0){
+        finalGPANum.innerHTML=0;
+    }else{
+        finalGPAcount=(Math.round(((totalPoints/totalCredits))*100)/100);
+        finalGPANum.innerHTML=finalGPAcount;
+    }
 }
