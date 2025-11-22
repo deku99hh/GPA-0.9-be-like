@@ -17,7 +17,7 @@ let TheArray = [
             },
         ]
     },{
-        semesterGPA : 3.4,
+        semesterGPA : 4,
         slices : [
             {
                 grade: 'B+',
@@ -34,7 +34,7 @@ let TheArray = [
             },
         ]
     },{
-        semesterGPA : 3.4,
+        semesterGPA : 2.4,
         slices : [
             {
                 grade: 'B+',
@@ -54,15 +54,15 @@ let TheArray = [
         semesterGPA : 0,
         slices : [
             {
-                grade: '',
+                grade: '##',
                 credit: 0,
                 isAgain: null,
             },{
-                grade: '',
+                grade: '##',
                 credit: 0,
                 isAgain: null,
             },{
-                grade: '',
+                grade: '##',
                 credit: 0,
                 isAgain: null,
             }
@@ -70,8 +70,23 @@ let TheArray = [
     },
 ];
 
+const grades={
+    'A':4,
+    'A-':3.7,
+    'B+':3.3,
+    'B':3,
+    'B-':2.7,
+    'C+':2.3,
+    'C':2,
+    'C-':1.7,
+    'D+':1.3,
+    'D':1,
+    'D-':0.7,
+    'F':0,
+}
+
 let finalGPA = document.getElementById('finalGPA');
-let pastHoures = document.getElementById('pastHoures');
+let pastHours = document.getElementById('pastHours');
 let pastGPA = document.getElementById('pastGPA');
 let blockes = document.querySelector('.blockes');
 let buttons = document.querySelectorAll('button');
@@ -97,15 +112,15 @@ function addSemesterBlock(){
         semesterGPA : 0,
         slices : [
             {
-                grade: '',
+                grade: '##',
                 credit: 0,
                 isAgain: null,
             },{
-                grade: '',
+                grade: '##',
                 credit: 0,
                 isAgain: null,
             },{
-                grade: '',
+                grade: '##',
                 credit: 0,
                 isAgain: null,
             }
@@ -118,7 +133,7 @@ function addSemesterBlock(){
 function addSlice(blockNum){
     TheArray[blockNum].slices.push(
         {
-            grade: '',
+            grade: '##',
             credit: 0,
             isAgain: null,
         }
@@ -130,11 +145,34 @@ function update(){
     let theHTML='';
     for (let [semesterIndex, element] of TheArray.entries()){
         let sliceesHTML='';
+        let semesterGPA=0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         for (let [sliceIndex, slice] of Object.entries(element.slices)){
             // console.log(sliceIndex);
             sliceesHTML=sliceesHTML+`
             <div class="slice">
                 <div class="corceNum">#${(Number(sliceIndex)+1)}</div>
+                <p class="prevew" style="left: 26px;">
+                ${TheArray[Number(semesterIndex)].slices[Number(sliceIndex)].grade}
+                </p>
                 <input type="checkbox" name="grade" id="checkboxGrade">
                 
                 <div class="gradePOPup POPup">
@@ -153,6 +191,9 @@ function update(){
                 </div>
                 <!-- جبت كام -->
 
+                <p class="prevew" style="left:52px;">
+                ${TheArray[Number(semesterIndex)].slices[Number(sliceIndex)].credit}
+                </p>
                 <input type="checkbox" name="credit" id="checkboxCredit"> 
                 <div class="creditPOPup POPup">
                     <button onclick="clickingCredit(1,${Number(semesterIndex)},${Number(sliceIndex)})">1</button>
@@ -164,6 +205,9 @@ function update(){
                 </div>
                 <!-- عدد الساعات -->
 
+                <p class="prevew" style="left: 70px;">
+                ${TheArray[Number(semesterIndex)].slices[Number(sliceIndex)].isAgain}
+                </p>
                 <input type="checkbox" name="isAgain" id="checkboxIsAgain">
                 <div class="isAgainPOPup POPup">
                     <button onclick="clickingIsAgain('NO',${Number(semesterIndex)},${Number(sliceIndex)})">NO</button>
@@ -181,13 +225,22 @@ function update(){
                     <button onclick="clickingIsAgain('F',${Number(semesterIndex)},${Number(sliceIndex)})">F</button>
                 </div>
                 <!-- عايد؟؟ -->
+                <button onclick="DeletSlice(${Number(semesterIndex)},${Number(sliceIndex)})">X</button>
             </div>
             `
         ;}
+
+
+
+
+
+
+
         theHTML=theHTML+(`
             <div class="semesterBlock">
                 <div class="semesterResult">
                     <span id="semesterGPA">${element.semesterGPA}</span>
+                    <button onclick="DeletBlock(${Number(semesterIndex)})">X</button>
                 </div>
                 <div class="redTutorialText"> dasds sdasdas sadasd adsadad</div>
 
@@ -222,3 +275,42 @@ function clickingIsAgain(choice,block,slice){
     console.log(TheArray);
     console.log(TheArray[block].slices[slice].isAgain);
 };
+
+function DeletSlice(block,slice){
+    TheArray[block].slices.splice(slice,1);
+    // delete TheArray[block].slices[slice];
+};
+function DeletBlock(block){
+    TheArray.splice(block,1);
+    // delete TheArray[block].slices[slice];
+};
+
+function calcNum(grade){
+    // if(grade=='A'){
+    //     return 4;
+    // }else if(grade=='A-'){
+    //     return 3.7;
+    // }else if(grade=='B+'){
+    //     return 3.3;
+    // }else if(grade=='B'){
+    //     return 3;
+    // }else if(grade=='B-'){
+    //     return 2.7;
+    // }else if(grade=='C+'){
+    //     return 2.3;
+    // }else if(grade=='C'){
+    //     return 2;
+    // }else if(grade=='C-'){
+    //     return 1.7;
+    // }else if(grade=='D+'){
+    //     return 1.3;
+    // }else if(grade=='D'){
+    //     return 1;
+    // }else if(grade=='D-'){
+    //     return 0.7;
+    // }else if(grade=='F'){
+    //     return 0;
+    // };
+
+    return(grades[grade]);
+}

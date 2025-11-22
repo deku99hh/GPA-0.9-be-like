@@ -1,6 +1,6 @@
-body{
+/* body{
     padding-bottom: 2000px;
-}
+} */
 
 header{
     display: flex;
@@ -13,7 +13,7 @@ header{
     flex-direction: column;
 }
 
-.blockes {
+.blocks {
     margin-bottom: 20px;
 }
 
@@ -37,4 +37,14 @@ header{
 
 #checkboxIsAgain:checked + .isAgainPOPup{
     display: flex;
+}
+
+p{
+    margin: 0;
+}
+
+.prevew{
+    position: absolute;
+    user-select: none;
+    z-index: -9;
 }
